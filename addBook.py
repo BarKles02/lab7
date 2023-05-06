@@ -20,5 +20,5 @@ def addBook(author, title, pages):
     }
     with open('book.csv', 'a', newline='')as bookFile:
         csvWriter = csv.DictWriter(
-            bookFile, fieldnames=customerPersonalFieldnames)
+            bookFile, fieldnames=bookFieldnames)
         csvWriter.writerow(book)

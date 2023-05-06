@@ -3,7 +3,6 @@
 # kilku książek równocześnie przez klienta
 # funkcja 2: zwrot 1 książki przez klienta
 import csv
-import os
 from fixedTime import formattedCurrentTime
 from fieldnames import *
 
@@ -33,8 +32,15 @@ def lendBooks(customerId, *args):
         csvWriter = csv.DictWriter(
             customerFile, fieldnames=customerPersonalFieldnames)
         for book in booksLending:
-            csvWriter.writerow({'BOOK': book['ID'], 'HIRED': formattedCurrentTime(
-            ), 'CREATED': book['CREATED'], 'RETURNED': 'None'})
+            csvWriter.writerow({
+                'ID': book['ID'],
+                'AUTHOR': book['AUTHOR'],
+                'TITLE': book['TITLE'],
+                'PAGES': book['PAGES'],
+                'CREATED': book['CREATED'],
+                'HIRED': formattedCurrentTime(),
+                'RETURNED': 'Not yet returned'
+            })
     with open('book.csv', 'w', newline='') as bookFile:
         csvWriter = csv.DictWriter(bookFile, fieldnames=bookFieldnames)
         for book in booksStayingInLibrary:
@@ -61,6 +67,14 @@ def returnBook(customerId, bookId):
             csvWriter.writerow(book)
         csvWriter.writerow(booksReturning)
 
-
-with open('book.csv', 'a', newline='') as bookFile:
-    csvWriter = csv.DictWriter(bookFile, fieldnames=bookFieldnames)
+    with open('book.csv', 'a', newline='') as bookFile:
+        csvWriter = csv.DictWriter(bookFile, fieldnames=bookFieldnames)
+        book = {
+            'ID': booksReturning['ID'],
+            'AUTHOR': booksReturning['AUTHOR'],
+            'TITLE': booksReturning['TITLE'],
+            'PAGES': booksReturning['PAGES'],
+            'CREATED': booksReturning['CREATED'],
+            'UPDATED': formattedCurrentTime()
+        }
+        csvWriter.writerow(book)

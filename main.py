@@ -9,8 +9,7 @@ from idGeneration import findId
 
 
 def main():
-    addCustomer('Tajemniczy Klient', 'jakisemail@gmail.com',
-                '696969696', 'Szkolna', 'Whiteslide', 'Poland')
+    lendBooks(577, 101)
 
 
 if __name__ == "__main__":
