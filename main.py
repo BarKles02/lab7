@@ -9,13 +9,8 @@ from idGeneration import findId
 
 
 def main():
-    # addCustomer('Bartłomiej Kleszczewski', 'pulpecikpucipuci@gmail.com',
-    #  '795318141', 'Pogodna 2', 'Białystok', 'Poland')
-    # deleteCustomer(id=451)
-    # addBook('Adam Mickiewicz', 'Dziady', '290')
-    lendBooks(577, findId(
-    'book.csv', 'TITLE', 'Dziady'))
-    # returnBook(577, 138)
+    # addBook('Autor', 'Książka', '69')
+    lendBooks(577, '040')
 
 
 if __name__ == "__main__":

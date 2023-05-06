@@ -30,9 +30,11 @@ def lendBooks(customerId, *args):
                 booksStayingInLibrary.append(row)
     customerFileName = f'DATABASE/{customerId}.csv'
     with open(customerFileName, 'a', newline='') as customerFile:
-        csvWriter = csv.writer(customerFile)
+        csvWriter = csv.DictWriter(customerFile, fieldnames=[
+                                   'BOOK', 'HIRED', 'CREATED', 'RETURNED'])
         for book in booksLending:
-            csvWriter.writerow([book['ID'], formattedCurrentTime(),book['CREATED'] ''])
+            csvWriter.writerow({'BOOK': book['ID'], 'HIRED': formattedCurrentTime(
+            ), 'CREATED': book['CREATED'], 'RETURNED': 'None'})
     with open('book.csv', 'w', newline='') as bookFile:
         csvWriter = csv.DictWriter(bookFile, fieldnames=[
                                    'ID', 'AUTHOR', 'TITLE', 'PAGES', 'CREATED', 'UPDATED'])
@@ -41,6 +43,30 @@ def lendBooks(customerId, *args):
 
 
 def returnBook(customerId, bookId):
+    booksReturning = []
+    retOfTheBooks = []
     customerFileName = f'DATABASE/{customerId}.csv'
     with open(customerFileName, 'r', newline='')as customerFile:
-        csvReader = csv.DictReader(customerFile, fieldnames=[])
+        csvReader = csv.DictReader(customerFile, fieldnames=[
+                                   'BOOK', 'HIRED', 'CREATED', 'RETURNED'])
+        for row in csvReader:
+            if row['ID'] == bookId:
+                row['RETURNED'] = formattedCurrentTime()
+                booksReturning.append(row)
+                continue
+            restOfTheBooks.append(row)
+    with open(customerFilename, 'r', newline='')as customerFile:
+        csvWriter = csv.DictWriter(customerFile, fieldnames=[
+                                   'BOOK', 'HIRED', 'CREATED', 'RETURNED'])
+        for book in restOfTheBooks:
+            csvWriter.writerow(book)
+        csvWriter.writerow(booksReturning)
+
+
+with open('book.csv', 'a', newline='') as bookFile:
+    csvWriter = csv.DictWriter(bookFile, fieldnames=[
+                               'ID', 'AUTHOR', 'TITLE', 'PAGES', 'CREATED', 'UPDATED'])
+    book = {
+        'ID': booksReturning['ID'],
+        'AUTHOR': 
+    }
