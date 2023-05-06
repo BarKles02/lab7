@@ -5,6 +5,7 @@
 import csv
 import os
 from fixedTime import formattedCurrentTime
+from fieldnames import *
 
 # with open('customer.csv', 'r', newline='') as customersFile:
 #     csvReader = csv.DictReader(customersFile, fieldnames=[
@@ -19,8 +20,7 @@ def lendBooks(customerId, *args):
     booksStayingInLibrary = []
     booksLending = []
     with open('book.csv', 'r', newline='')as bookFile:
-        csvReader = csv.DictReader(bookFile, fieldnames=[
-                                   'ID', 'AUTHOR', 'TITLE', 'PAGES', 'CREATED', 'UPDATED'])
+        csvReader = csv.DictReader(bookFile, fieldnames=bookFieldnames)
         for arg in args:
             bookFile.seek(0)
             for row in csvReader:
@@ -30,43 +30,37 @@ def lendBooks(customerId, *args):
                 booksStayingInLibrary.append(row)
     customerFileName = f'DATABASE/{customerId}.csv'
     with open(customerFileName, 'a', newline='') as customerFile:
-        csvWriter = csv.DictWriter(customerFile, fieldnames=[
-                                   'BOOK', 'HIRED', 'CREATED', 'RETURNED'])
+        csvWriter = csv.DictWriter(
+            customerFile, fieldnames=customerPersonalFieldnames)
         for book in booksLending:
             csvWriter.writerow({'BOOK': book['ID'], 'HIRED': formattedCurrentTime(
             ), 'CREATED': book['CREATED'], 'RETURNED': 'None'})
     with open('book.csv', 'w', newline='') as bookFile:
-        csvWriter = csv.DictWriter(bookFile, fieldnames=[
-                                   'ID', 'AUTHOR', 'TITLE', 'PAGES', 'CREATED', 'UPDATED'])
+        csvWriter = csv.DictWriter(bookFile, fieldnames=bookFieldnames)
         for book in booksStayingInLibrary:
             csvWriter.writerow(book)
 
 
 def returnBook(customerId, bookId):
     booksReturning = []
-    retOfTheBooks = []
+    restOfTheBooks = []
     customerFileName = f'DATABASE/{customerId}.csv'
     with open(customerFileName, 'r', newline='')as customerFile:
-        csvReader = csv.DictReader(customerFile, fieldnames=[
-                                   'BOOK', 'HIRED', 'CREATED', 'RETURNED'])
+        csvReader = csv.DictReader(
+            customerFile, fieldnames=customerPersonalFieldnames)
         for row in csvReader:
             if row['ID'] == bookId:
                 row['RETURNED'] = formattedCurrentTime()
                 booksReturning.append(row)
                 continue
             restOfTheBooks.append(row)
-    with open(customerFilename, 'r', newline='')as customerFile:
-        csvWriter = csv.DictWriter(customerFile, fieldnames=[
-                                   'BOOK', 'HIRED', 'CREATED', 'RETURNED'])
+    with open(customerFileName, 'r', newline='')as customerFile:
+        csvWriter = csv.DictWriter(
+            customerFile, fieldnames=customerPersonalFieldnames)
         for book in restOfTheBooks:
             csvWriter.writerow(book)
         csvWriter.writerow(booksReturning)
 
 
 with open('book.csv', 'a', newline='') as bookFile:
-    csvWriter = csv.DictWriter(bookFile, fieldnames=[
-                               'ID', 'AUTHOR', 'TITLE', 'PAGES', 'CREATED', 'UPDATED'])
-    book = {
-        'ID': booksReturning['ID'],
-        'AUTHOR': 
-    }
+    csvWriter = csv.DictWriter(bookFile, fieldnames=bookFieldnames)

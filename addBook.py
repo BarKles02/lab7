@@ -4,6 +4,7 @@
 import idGeneration
 import csv
 import customerService
+from fieldnames import *
 
 
 def addBook(author, title, pages):
@@ -19,5 +20,5 @@ def addBook(author, title, pages):
     }
     with open('book.csv', 'a', newline='')as bookFile:
         csvWriter = csv.DictWriter(
-            bookFile, fieldnames=['ID', 'AUTHOR', 'TITLE', 'PAGES', 'CREATED', 'UPDATED'])
+            bookFile, fieldnames=customerPersonalFieldnames)
         csvWriter.writerow(book)
