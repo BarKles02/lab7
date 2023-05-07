@@ -9,7 +9,7 @@ from idGeneration import findId
 
 
 def main():
-    lendBooks(577, 101)
+    lendBooks(577,570)
 
 
 if __name__ == "__main__":

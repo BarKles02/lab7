@@ -25,10 +25,10 @@ def fixedIdGeneration(file):
     return identifier
 
 
-def findId(file, fieldName, value):
+def findId(file, fieldName, valueOfFieldname):
     with open(file, 'r') as csvFile:
         csvReader = csv.DictReader(csvFile)
         for row in csvReader:
-            if row[fieldName] == value:
+            if row[fieldName] == valueOfFieldname:
                 return row['ID']
     return None

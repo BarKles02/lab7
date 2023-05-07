@@ -1,15 +1,6 @@
-# 2. moduł obsługi klienta zawierający 3 funkcje
-# funkcja 1: dodawanie (przez administratora) danych
-# nowego klienta do bazy tj. do pliku customer.csv i address.csv
-# funkcja 2: usuwanie danych klienta względem ID lub NAME
-
-# ID,NAME,E-MAIL,PHONE,CREATED,UPDATED
-# ID,STREET,CITY,COUNTRY
-
 from fixedTime import formattedCurrentTime
 import idGeneration
 import csv
-import os
 from fieldnames import *
 
 
@@ -41,11 +32,6 @@ def addCustomer(name, email, phone, street, city, country):
             csvWriter = csv.DictWriter(
                 addressFile, fieldnames=addressFieldnames)
             csvWriter.writerow(address)
-        databaseDir = os.path.join(os.getcwd(), 'DATABASE')
-        with open(os.path.join(databaseDir, identifier + '.csv',), 'w', newline='') as personFile:
-            csvWriter = csv.DictWriter(
-                personFile, fieldnames=customerPersonalFieldnames)
-            csvWriter.writeheader()
     except Exception as e:
         print(f'An error occurred while adding the customer: {e}')
 
@@ -77,8 +63,16 @@ def deleteCustomer(id=None, name=None):
         csvWriter = csv.DictWriter(addressFile, fieldnames=addressFieldnames)
         csvWriter.writerows(addressRows)
 
-# funkcja 3: rejestracja nowego klienta
-# (klient podaje swoje dane, nadawany jest losowo numer ID (3 cyfry))
-# w folderze DATABASE utworzony jest plik tekstowy (nazwa pliku to ID klienta)
-# do którego będą zapisywane dane wypożyczonej książki oraz
-# data wypożyczenia a potem zwrotu książki
+
+def registerCustomer(customerId):
+    customerFileDir = f'DATABASE/{customerId}.csv'
+    with open('customer.csv', 'r', newline='') as customersFile:
+        csvReader = csv.DictReader(customersFile)
+        for row in csvReader:
+            if row['ID'] == customerId:
+                print(f"Error: Customer ID {customerId} already exists!")
+                return
+    with open(customerFileDir, 'w', newline='')as customerPersonalFile:
+        csvWriter = csv.DictWriter(
+            customerPersonalFile, fieldnames=customerPersonalFieldnames)
+        csvWriter.writeheader()

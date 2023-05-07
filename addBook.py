@@ -1,6 +1,3 @@
-# ID,AUTHOR,TITLE,PAGES,CREATED,UPDATED
-# 3. moduł obsługi książek zawierający 1 funkcję:
-# funkcja 1: dodanie nowej książki do bazy (book.csv)
 import idGeneration
 import csv
 import customerService

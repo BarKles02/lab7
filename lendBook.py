@@ -1,18 +1,6 @@
-# 4. moduł wypożyczania książki przez użytkownika 2 funkcje
-# funkcja 1 (wielu zmiennych): wypożyczenie książki lub
-# kilku książek równocześnie przez klienta
-# funkcja 2: zwrot 1 książki przez klienta
 import csv
 from fixedTime import formattedCurrentTime
 from fieldnames import *
-
-# with open('customer.csv', 'r', newline='') as customersFile:
-#     csvReader = csv.DictReader(customersFile, fieldnames=[
-#                                'ID', 'NAME', 'E-MAIL', 'PHONE', 'CREATED', 'UPDATED'])
-#     for row in csvReader:
-#         if (id is not None and row['ID'] == str(id)) or (name is not None and row['NAME'] == name):
-#             continue
-#         customerRows.append(row)
 
 
 def lendBooks(customerId, *args):
