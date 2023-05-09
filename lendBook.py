@@ -3,20 +3,23 @@ from fixedTime import formattedCurrentTime
 from fieldnames import *
 
 
+
+
 def lendBooks(customerId, *args):
     booksStayingInLibrary = []
     booksLending = []
     with open('book.csv', 'r', newline='')as bookFile:
         csvReader = csv.DictReader(bookFile, fieldnames=bookFieldnames)
+        lista=[wiersz for wiersz in csvReader]
         for arg in args:
-            bookFile.seek(0)
-            for row in csvReader:
+            # bookFile.seek(0)
+            for row in lista:
                 if row['ID'] == arg:
                     booksLending.append(row)
                     continue
                 booksStayingInLibrary.append(row)
     customerFileName = f'DATABASE/{customerId}.csv'
-    with open(customerFileName, 'a', newline='') as customerFile:
+    with open(customerFileName, 'a', newline='')as customerFile:
         csvWriter = csv.DictWriter(
             customerFile, fieldnames=customerPersonalFieldnames)
         for book in booksLending:
@@ -33,6 +36,7 @@ def lendBooks(customerId, *args):
         csvWriter = csv.DictWriter(bookFile, fieldnames=bookFieldnames)
         for book in booksStayingInLibrary:
             csvWriter.writerow(book)
+
 
 
 def returnBook(customerId, bookId):

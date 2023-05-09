@@ -6,7 +6,6 @@ def idGenerator():
     identifier = random.randint(0, 999)
     return str(identifier).zfill(3)
 
-
 def fixedIdGeneration(file):
     identifier = idGenerator()
     try:
